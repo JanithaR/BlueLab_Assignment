@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">BlueLab_Assignment</string>
+    <string-array name="categories_array">
+        <item>Temperature</item>
+        <item>Volume</item>
+    </string-array>
+    <string-array name="temperature_units_array">
+        <item>Kelvin</item>
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+    <string-array name="volume_units_array">
+        <item>Litre</item>
+        <item>Millilitre</item>
+        <item>US liquid gallon</item>
+    </string-array>
+    <string name="unexpected_error">Unexpected Error!</string>
 </resources>
