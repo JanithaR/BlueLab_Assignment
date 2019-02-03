@@ -249,4 +249,17 @@ class ConverterUtilTest {
 
         Assert.assertEquals(expected, actual.toUnitValue, 0.1)
     }
+
+    @Test
+    fun convert100USLiquidGallonToLitre() {
+        val category = "Volume"
+        val fromUnit = "US liquid gallon"
+        val toUnit = "Litre"
+        val value = 100.0
+        val expected = 378.54
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
 }
