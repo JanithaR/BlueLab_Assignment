@@ -29,6 +29,18 @@ class ConverterUtilTest {
 
         Assert.assertEquals(expected, actual.toUnitValue, 0.1)
     }
+    @Test
+    fun convertKelvinToKelvin() {
+        val category = "Temperature"
+        val fromUnit = "Kelvin"
+        val toUnit = "Kelvin"
+        val value = 0.0
+        val expected = 0.0
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
 
     @Test
     fun convertCelsiusToKelvin() {
@@ -50,6 +62,19 @@ class ConverterUtilTest {
         val toUnit = "Fahrenheit"
         val value = 0.0
         val expected = 32.0
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
+
+    @Test
+    fun convertCelsiusToCelsius() {
+        val category = "Temperature"
+        val fromUnit = "Celsius"
+        val toUnit = "Celsius"
+        val value = 0.0
+        val expected = 0.0
 
         val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
 
@@ -83,6 +108,19 @@ class ConverterUtilTest {
     }
 
     @Test
+    fun convertFahrenheitToFahrenheit() {
+        val category = "Temperature"
+        val fromUnit = "Fahrenheit"
+        val toUnit = "Fahrenheit"
+        val value = 0.0
+        val expected = 0.0
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
+
+    @Test
     fun convertLitreToMillilitre() {
         val category = "Volume"
         val fromUnit = "Litre"
@@ -109,6 +147,19 @@ class ConverterUtilTest {
     }
 
     @Test
+    fun convertLitreToLitre() {
+        val category = "Volume"
+        val fromUnit = "Litre"
+        val toUnit = "Litre"
+        val value = 0.0
+        val expected = 0.0
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
+
+    @Test
     fun convertMillilitreToLitre() {
         val category = "Volume"
         val fromUnit = "Millilitre"
@@ -127,6 +178,19 @@ class ConverterUtilTest {
         val fromUnit = "Millilitre"
         val toUnit = "US liquid gallon"
         val value = 1.0
+        val expected = 0.0
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
+
+    @Test
+    fun convertMillilitreToMillilitre() {
+        val category = "Volume"
+        val fromUnit = "Millilitre"
+        val toUnit = "Millilitre"
+        val value = 0.0
         val expected = 0.0
 
         val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
@@ -167,6 +231,19 @@ class ConverterUtilTest {
         val toUnit = "Millilitre"
         val value = 1.0
         val expected = 3785.40999993543
+
+        val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
+
+        Assert.assertEquals(expected, actual.toUnitValue, 0.1)
+    }
+
+    @Test
+    fun convertUSLiquidGallonToUSLiquidGallon() {
+        val category = "Volume"
+        val fromUnit = "US liquid gallon"
+        val toUnit = "US liquid gallon"
+        val value = 0.0
+        val expected = 0.0
 
         val actual = ConverterUtil.convert(category, fromUnit, toUnit, value)
 
