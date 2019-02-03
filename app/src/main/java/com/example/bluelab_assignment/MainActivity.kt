@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     var unit2: String = ""
     var unit1Value: Double = 0.0
     var unit2Value: Double = 0.0
+    var input1HasFocus = true
+    var input2HasFocus = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,58 +31,118 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         initInputs()
     }
 
+    private fun clearInput1() {
+        if (editTextInput1.text.toString() != "") {
+            editTextInput1.setText("")
+        }
+    }
+
+    private fun clearInput2() {
+        if (editTextInput2.text.toString() != "") {
+            editTextInput2.setText("")
+        }
+    }
+
     private fun initInputs() {
         editTextInput1.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                var temp = 0.0
+                val temp: Double
 
-                if (!s.toString().isEmpty()) {
+                if (!s.toString().isEmpty() && s.toString() != "-") {
                     temp = s.toString().toDouble()
-                }
 
-                if (temp != unit1Value) {
-                    unit1Value = temp
+                    if (temp != unit1Value) {
+                        unit1Value = temp
 
-                    val conversionResponse =
-                        ConverterUtil.convert(category = category, fromUnit = unit1, toUnit = unit2, value = unit1Value)
+                        val conversionResponse =
+                            ConverterUtil.convert(
+                                category = category,
+                                fromUnit = unit1,
+                                toUnit = unit2,
+                                value = unit1Value
+                            )
 
-                    editTextInput1.setText(conversionResponse.fromUnitValue.toString())
-                    editTextInput2.setText(conversionResponse.toUnitValue.toString())
+                        unit2Value = conversionResponse.toUnitValue
+
+                        editTextInput2.setText(unit2Value.toString())
+
+                        moveCursorToEnd(editTextInput2)
+                    }
+                } else {
+                    clearInput2()
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // nothing here
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // nothing here
             }
         })
 
         editTextInput2.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                var temp = 0.0
+                val temp: Double
 
-                if (!s.toString().isEmpty()) {
+                if (!s.toString().isEmpty() && s.toString() != "-") {
                     temp = s.toString().toDouble()
-                }
 
-                if (temp != unit2Value) {
-                    unit2Value = temp
+                    if (temp != unit2Value) {
+                        unit2Value = temp
 
-                    val conversionResponse =
-                        ConverterUtil.convert(category = category, fromUnit = unit2, toUnit = unit1, value = unit2Value)
+                        val conversionResponse =
+                            ConverterUtil.convert(
+                                category = category,
+                                fromUnit = unit2,
+                                toUnit = unit1,
+                                value = unit2Value
+                            )
 
-                    editTextInput1.setText(conversionResponse.toUnitValue.toString())
-                    editTextInput2.setText(conversionResponse.fromUnitValue.toString())
+                        unit1Value = conversionResponse.toUnitValue
+
+                        editTextInput1.setText(unit1Value.toString())
+
+                        moveCursorToEnd(editTextInput1)
+                    }
+                } else {
+                    clearInput1()
                 }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // noting here
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // nothing here
             }
         })
+
+        editTextInput1.setOnFocusChangeListener { view, hasFocus ->
+            run {
+                if (hasFocus) {
+                    input1HasFocus = hasFocus
+
+                    moveCursorToEnd(view as EditText)
+                }
+            }
+        }
+
+        editTextInput2.setOnFocusChangeListener { view, hasFocus ->
+            run {
+                if (hasFocus) {
+                    input2HasFocus = hasFocus
+
+                    moveCursorToEnd(view as EditText)
+                }
+            }
+        }
+    }
+
+    private fun moveCursorToEnd(view: EditText) {
+        view.setSelection(view.text.length)
     }
 
     private fun initCategoriesSpinner() {
@@ -88,9 +151,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             R.array.categories_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner
             spinnerCategory.adapter = adapter
         }
 
@@ -98,7 +159,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onNothingSelected(parent: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        // nothing here
     }
 
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -119,8 +180,17 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val conversionResponse =
             ConverterUtil.convert(category = category, fromUnit = unit1, toUnit = unit2, value = unit1Value)
 
-        editTextInput1.setText(conversionResponse.fromUnitValue.toString())
-        editTextInput2.setText(conversionResponse.toUnitValue.toString())
+        if (conversionResponse.fromUnitValue != unit1Value) {
+            editTextInput1.setText(conversionResponse.fromUnitValue.toString())
+
+            moveCursorToEnd(editTextInput1)
+        }
+
+        if (conversionResponse.toUnitValue != unit1Value) {
+            editTextInput2.setText(conversionResponse.toUnitValue.toString())
+
+            moveCursorToEnd(editTextInput2)
+        }
     }
 
     private fun initUnitSpinners(category: String) {

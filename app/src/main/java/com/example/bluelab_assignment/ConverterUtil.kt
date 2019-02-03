@@ -4,6 +4,10 @@ package com.example.bluelab_assignment
 //Convert between the following volume units: Litre (l), Millilitre (ml), US liquid gallon (US gal)
 class ConverterUtil {
     companion object {
+        private fun roundTo(value: Double, decimalPoints: Int): Double {
+            return String.format("%.${decimalPoints}f", value).toDouble()
+        }
+
         fun convert(
             category: String,
             fromUnit: String,
@@ -38,12 +42,12 @@ class ConverterUtil {
         private fun fromUSLiquidGallon(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Litre" -> {
-                    val res: Double = value * 3.785
+                    val res: Double = roundTo(value * 3.785, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "Millilitre" -> {
-                    val res: Double = value * 3785.412
+                    val res: Double = roundTo(value * 3785.412, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
@@ -55,12 +59,12 @@ class ConverterUtil {
         private fun fromMillilitre(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Litre" -> {
-                    val res: Double = value / 1000
+                    val res: Double = roundTo(value / 1000, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "US liquid gallon" -> {
-                    val res: Double = value / 3785.412
+                    val res: Double = roundTo(value / 3785.412, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
@@ -72,12 +76,12 @@ class ConverterUtil {
         private fun fromLitre(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Millilitre" -> {
-                    val res: Double = value * 1000
+                    val res: Double = roundTo(value * 1000, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "US liquid gallon" -> {
-                    val res: Double = value / 3.785
+                    val res: Double = roundTo(value / 3.785, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
@@ -89,12 +93,12 @@ class ConverterUtil {
         private fun fromKelvin(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Celsius" -> {
-                    val res: Double = value - 273.15
+                    val res: Double = roundTo(value - 273.15, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "Fahrenheit" -> {
-                    val res: Double = (value - 273.15) * 9 / 5 + 32
+                    val res: Double = roundTo((value - 273.15) * 9 / 5 + 32, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
@@ -106,12 +110,12 @@ class ConverterUtil {
         private fun fromFahrenheit(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Celsius" -> {
-                    val res: Double = (value - 32) * 5 / 9
+                    val res: Double = roundTo((value - 32) * 5 / 9, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "Kelvin" -> {
-                    val res: Double = (value - 32) * 5 / 9 + 273.15
+                    val res: Double = roundTo((value - 32) * 5 / 9 + 273.15, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
@@ -123,12 +127,12 @@ class ConverterUtil {
         private fun fromCelsius(toUnit: String, value: Double): ConversionResponse {
             return when (toUnit) {
                 "Fahrenheit" -> {
-                    val res: Double = (value * 9 / 5) + 32
+                    val res: Double = roundTo((value * 9 / 5) + 32, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
                 "Kelvin" -> {
-                    val res: Double = value + 273.15
+                    val res: Double = roundTo(value + 273.15, 2)
 
                     ConversionResponse(fromUnitValue = value, toUnitValue = res)
                 }
